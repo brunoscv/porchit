@@ -56,7 +56,7 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item" href="{{ route('user.edit', $user->id) }}">Edit</a>
-                                                    <a class="dropdown-item" href="user/delete/{{ $user->id }}">Delete</a>
+                                                    <a class="dropdown-item" href="delete/{{ $user->id }}">Delete</a>
 
                                                </div>
                                              
