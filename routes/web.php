@@ -27,7 +27,7 @@ Route::get('/user/create', ['as' => 'user.form', 'uses' => 'UserController@creat
 Route::post('/user/store', 'UserController@store')->name('store');
 Route::post('/user/edit', 'UserController@edit')->name('edit');
 Route::post('/user/update', 'UserController@update')->name('update');
-Route::get('delete/{id}', 'UserController@destroy');
+Route::get('/user/{id}/destroy', 'UserController@destroy');
 
 
 
