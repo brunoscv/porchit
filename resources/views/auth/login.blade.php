@@ -15,13 +15,9 @@
                         </div>
                         <div class="text-center text-muted mb-4">
                             <small>
-                                {{ __('Log in with these credentials:') }}
+                                {{ __('Log in:') }}
                             </small>
                             <br>
-                            <small>
-                                {{ __('Username') }} <strong>admin@argon.com</strong>
-                                {{ __('Password') }} <strong>secret</strong>
-                            </small>
                         </div>
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf

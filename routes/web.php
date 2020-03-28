@@ -27,6 +27,8 @@ Route::get('/user/create', ['as' => 'user.form', 'uses' => 'UserController@creat
 Route::post('/user/store', 'UserController@store')->name('store');
 Route::post('/user/edit', 'UserController@edit')->name('edit');
 Route::post('/user/update', 'UserController@update')->name('update');
+Route::get('/user/delete/{id}', 'UserController@destroy');
+
 
 
 Route::group(['middleware' => 'auth'], function () {

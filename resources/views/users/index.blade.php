@@ -25,6 +25,13 @@
                     
                     <div class="col-12">
                         <div class="table-responsive">
+                            <div class="col-sm-12">
+                                @if(session()->get('success'))
+                                    <div class="alert alert-success">
+                                    {{ session()->get('success') }}  
+                                    </div>
+                                @endif
+                            </div>
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
@@ -49,7 +56,10 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item" href="{{ route('user.edit', $user->id) }}">Edit</a>
-                                                </div>
+                                                    <a class="dropdown-item" href="user/delete/{{ $user->id }}">Delete</a>
+
+                                               </div>
+                                             
                                             </div>
                                         </td>
                                     </tr>
