@@ -17,6 +17,11 @@
         <link href="{{ asset('porchit') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('porchit') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+        <!-- JS -->
+        <script src="{{ asset('porchit') }}/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="{{ asset('porchit') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+         <!-- Argon JS -->
+         <script src="{{ asset('porchit') }}/js/argon.js?v=1.0.0"></script>
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -35,8 +40,7 @@
             @include('layouts.footers.guest')
         @endguest
 
-        <script src="{{ asset('porchit') }}/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="{{ asset('porchit') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+       
         
         @stack('js')
         

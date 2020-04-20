@@ -84,6 +84,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('products') }}">
+                        <i class="ni ni-box-2 text-primary"></i> {{ __('Product') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-users"></i>
                         <span class="nav-link-text">{{ __('Users') }}</span>

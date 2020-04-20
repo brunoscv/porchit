@@ -30,6 +30,17 @@ Route::post('/user/update', 'UserController@update')->name('update');
 Route::get('/user/{id}/destroy', 'UserController@destroy');
 
 
+Route::get('/products', 'ProductsController@index')->name('products');
+Route::get('/products/create', 'ProductsController@create')->name('products-create');
+Route::post('/products/save', 'ProductsController@store')->name('store');
+Route::get('/products/save', 'ProductsController@store');
+Route::get('/products/edit/{id}', 'ProductsController@edit')->name('edit');
+Route::post('/products/update/', 'ProductsController@update')->name('update');
+Route::get('/products/zipcode/{id}', 'ProductsController@zipcode');
+Route::get('/products/productzipcode/{id}', 'ProductsController@productzipcode');
+Route::delete('/products/{id}', 'ProductsController@destroy');
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
