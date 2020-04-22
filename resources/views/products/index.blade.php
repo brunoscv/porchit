@@ -39,6 +39,7 @@
                                         <th scope="col">ZipCode(s)</th>
                                         <th scope="col">Creation Date</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Actions</th>
                                         <!-- <th scope="col">Actions</th> -->
                                     </tr>
                                 </thead>
@@ -56,21 +57,12 @@
                                       
                                         <td><?= date('m/d/Y', strtotime($product->created_at)) ?></td>
                                         <td>
-                                            <?= $product->status == 1 ? '<span class="btn btn-sm btn-success">Active</span>' : '<span class="btn btn-sm btn-danger">Deactive</span>' ?>
+                                            <?= $product->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?>
                                         </td>
-                                        <!-- <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="">Edit</a>
-                                                    <a class="dropdown-item" href="">Delete</a>
-
-                                               </div>
-                                             
-                                            </div>
-                                        </td> -->
+                                        <td class="">
+                                            <a class="mr-2" href="{{ route('products-edit', $product->id) }}"><i class="fas fa-edit"></i></a>
+                                            <a class="mr-2"  href="products/{{ $product->id }}/destroy"><i class="fa fa-trash"></i></a>
+                                        </td>
                                     </tr>
                                     <?php } ?>
                                    

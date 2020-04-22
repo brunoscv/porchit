@@ -18,7 +18,7 @@
                     </div>
                     <div class="card-body">
                         <!-- New Products Form -->
-                        <form action="/products/save" method="POST" class="form-horizontal">
+                        <form action="{{ route('products-update', $products->id) }}" method="POST" class="form-horizontal" autocomplete="off">
                             {{ csrf_field() }}
 
                             <div class="row">
@@ -62,15 +62,9 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="task-name" class="col-sm-12 control-label">Zip Codes</label>
+                                            <p class='col-12 ml-4'><input type='checkbox' id='select_all' /> Select / Unselect All</p>
                                         <div class="row" id="zipcodes">
-                                            <?php foreach ($zipmaster as $key => $zip) { ?>
-                                               
-                                                    <div class='control-group col-sm-2 checkbox text-center'>
-                                                       
-                                                        <label class='checkbox-inline'><input type='checkbox' name='productzip[]' value=""> <?= $zip->zip ?></label>
-                                                    </div>
-                                                
-                                            <?php } ?>
+                                        
                                         </div>
                                     </div>
                                 </div>
@@ -78,8 +72,11 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-6">
                                     <button type="submit" class="btn btn-success">
-                                        <i class="fa fa-plus"></i> Register
+                                        <i class="fa fa-check"></i> Update
                                     </button>
+                                    <a href="{{ route('products') }}" class="btn btn-default">
+                                        <i class="fa fa-block"></i> Cancel
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -91,10 +88,14 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
+
+            var zipcodes = "<?= $checkboxes ?>";
+            $("#zipcodes").append(zipcodes);
             $('body').on('change', '#states', function() {
                 var stateId = $("#states").val();
+                $('#select_all').prop('checked',false);
                 $.ajax({
-                    url : "zipcode/" + stateId, 
+                    url : "<?= url('products')?>/zipcode/" + stateId, 
                     type : 'GET',
                     /* context: this, */
                     dataType:"json",
@@ -105,7 +106,7 @@
                         if (data.success == true) {
                             for (var i in json_obj) {
                                 $("#zipcodes").append("<div class='control-group col-sm-2 checkbox text-center'>"
-                                                        + "<label class='checkbox-inline'><input type='checkbox' name='productzip[]' checked value="+ json_obj[i]["zip"] + "> "+ json_obj[i]["zip"] +"</label>"
+                                                        + "<label class='checkbox-inline'><input type='checkbox' name='productzip[]' value="+ json_obj[i]["zip"] + " class='checkbox'> "+ json_obj[i]["zip"] +"</label>"
                                                       + "</div>"); 
                             }
                         } 
@@ -115,6 +116,20 @@
                     } 
                 });
             });
+
+            $('#select_all').change(function() {
+                var checkboxes = $(this).closest('form').find(':checkbox');
+                checkboxes.prop('checked', $(this).is(':checked'));
+            });
+    
+            $('.checkbox').on('click',function(){
+                if($('.checkbox:checked').length == $('.checkbox').length){
+                    $('#select_all').prop('checked',true);
+                }else{
+                    $('#select_all').prop('checked',false);
+                }
+            });
+
         });
 
 

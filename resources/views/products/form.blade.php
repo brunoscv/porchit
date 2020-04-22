@@ -61,6 +61,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="task-name" class="col-sm-12 control-label">Zip Codes</label>
+                                        <p class='col-12 ml-4'><input type='checkbox' id='select_all' /> Select / Unselect All</p>
                                         <div class="row" id="zipcodes">
                                         
                                         </div>
@@ -88,6 +89,7 @@
         $(document).ready(function(){
             $('body').on('change', '#states', function() {
                 var stateId = $("#states").val();
+                $('#select_all').prop('checked',false);
                 $.ajax({
                     url : "zipcode/" + stateId, 
                     type : 'GET',
@@ -100,7 +102,7 @@
                         if (data.success == true) {
                             for (var i in json_obj) {
                                 $("#zipcodes").append("<div class='control-group col-sm-2 checkbox text-center'>"
-                                                        + "<label class='checkbox-inline'><input type='checkbox' name='productzip[]' checked value="+ json_obj[i]["zip"] + "> "+ json_obj[i]["zip"] +"</label>"
+                                                        + "<label class='checkbox-inline'><input type='checkbox' name='productzip[]' value="+ json_obj[i]["zip"] + " class='checkbox'> "+ json_obj[i]["zip"] +"</label>"
                                                       + "</div>"); 
                             }
                         } 
@@ -109,6 +111,19 @@
                         console.log(data);
                     } 
                 });
+            });
+
+            $('#select_all').change(function() {
+                var checkboxes = $(this).closest('form').find(':checkbox');
+                checkboxes.prop('checked', $(this).is(':checked'));
+            });
+    
+            $('.checkbox').on('click',function(){
+                if($('.checkbox:checked').length == $('.checkbox').length){
+                    $('#select_all').prop('checked',true);
+                }else{
+                    $('#select_all').prop('checked',false);
+                }
             });
         });
 

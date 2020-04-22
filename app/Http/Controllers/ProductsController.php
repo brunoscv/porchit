@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use PDO;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -89,8 +90,25 @@ class ProductsController extends Controller
         return $ziparr;
     }
 
+    function recursiveFormMenuList($name, $zipList, $values = array(), $extra=""){
+        
+        $str = "";
+        foreach($zipList as $zip){
+            $zipcode = $zip["zip"];
+            $checked = ( in_array($zip, $values) ) ? "checked='checked'" : "";
+            $str .= "<div class='control-group col-sm-2 checkbox text-center'><label class='checkbox-inline'><input $checked name='$name' value='$zipcode' type='checkbox' class='checkbox'/> $zipcode </label></div>";
+            $pkCount = (is_array($zip['zip']) ? count($zip['zip']) : 0);
+            if( $pkCount > 0){
+                $str .= recursiveFormMenuList($name, $zip['zip'], $values);
+            }
+        }
+        $str .= "";
+        return $str;	
+    }
+
     public function edit($id)
     {
+       /*  echo url('/products'); exit; */
         $products = DB::table('products')
         ->select('products.id', 'products.description AS name', 'products.state_id', 'products.status', 'products.created_at')
         ->where([
@@ -100,14 +118,56 @@ class ProductsController extends Controller
         $states = DB::table('states')->get();
 
         $zipcode = DB::table('products_zipcode')
-        ->select('products_zipcode.id', 'products_zipcode.product_id', 'products_zipcode.state_id', 'products_zipcode.zipcode', 'products_zipcode.created_at')
+        ->select('products_zipcode.zipcode AS zip')
         ->where([
             ['products_zipcode.product_id', '=', $id]
         ])->get();
+        //transform the result in array
+        $zipcodeArr = collect($zipcode)->map(function($x){ return (array) $x; })->toArray(); 
+
 
         $zipmaster = DB::table('zipcode')->select('zip')->where('cod_state', $products[0]->state_id)->get();
+         //transform the result in array
+        $zipmasterArr = collect($zipmaster)->map(function($y){ return (array) $y; })->toArray();
+        
+        //make the checkbox checked in view, if the zipcode from the table macthes with zipcodes saved in bank, to this product.
+        $checkboxes = $this->recursiveFormMenuList('productzip[]', $zipmasterArr, $zipcodeArr, $extra="");
 
-       /*  print_r($zipmaster);exit; */
-        return view('products.edit', ['products' => $products[0], 'states' => $states, 'zipcodes'=>$zipcode, 'zipmaster'=>$zipmaster] ); 
+        return view('products.edit', ['products' => $products[0], 'states' => $states, 'checkboxes' => $checkboxes, 'productzip' => $zipcodeArr, 'allzips' => $zipmasterArr] ); 
     }
+
+    public function update(Request $request, $id)
+    { 
+        
+        $description = $request->get('description');
+        $state_id = $request->get('state_id');
+        $status = $request->get('status');
+        $updated_at = now();
+
+        $delete_zip = DB::delete("DELETE FROM products_zipcode WHERE product_id = '$id'");
+        $update_product = DB::update("UPDATE products SET description =" . "'$description'" . ", state_id =" . "'$state_id'" . ", status =" . "'$status'" . ", updated_at =" . "'$updated_at' WHERE id='$id'");
+        
+        if ($request->get('productzip')) {
+            foreach ($request->get('productzip') as $key => $zip) {
+                $zipid = DB::table('products_zipcode')->insertGetId(
+                    ['product_id' => $id,
+                    'state_id' => $state_id,
+                    'zipcode' => $zip,
+                    'created_at' => now()]
+                );
+            }
+            return redirect('/products')->with('success', 'Product updated!');
+        } else {
+            return redirect('/products')->with('success', 'Product updated!');
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::delete(" DELETE FROM products_zipcode WHERE product_id=?",[$id]);
+        DB::delete(" DELETE FROM products WHERE id=?",[$id]);
+        return redirect('/products')->with('success', 'Product deleted!');
+    }
+
+    
 }

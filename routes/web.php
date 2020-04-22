@@ -34,11 +34,11 @@ Route::get('/products', 'ProductsController@index')->name('products');
 Route::get('/products/create', 'ProductsController@create')->name('products-create');
 Route::post('/products/save', 'ProductsController@store')->name('store');
 Route::get('/products/save', 'ProductsController@store');
-Route::get('/products/edit/{id}', 'ProductsController@edit')->name('edit');
-Route::post('/products/update/', 'ProductsController@update')->name('update');
+Route::get('/products/edit/{id}', 'ProductsController@edit')->name('products-edit');
+Route::post('/products/update/{id}', 'ProductsController@update')->name('products-update');
 Route::get('/products/zipcode/{id}', 'ProductsController@zipcode');
 Route::get('/products/productzipcode/{id}', 'ProductsController@productzipcode');
-Route::delete('/products/{id}', 'ProductsController@destroy');
+Route::get('/products/{id}/destroy', 'ProductsController@destroy')->name('product-delete');
 
 
 
