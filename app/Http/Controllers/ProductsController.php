@@ -34,6 +34,7 @@ class ProductsController extends Controller
         ->leftJoin('products_zipcode', 'products.id', '=', 'products_zipcode.product_id')
         ->select(DB::raw('COUNT(products_zipcode.product_id) AS zips'),'products.id', 'products.description AS name', 'states.description AS state', 'products.status', 'products.created_at')
         ->groupBy('products_zipcode.product_id', 'products.id', 'products.description', 'states.description', 'products.status', 'products.created_at')
+        ->orderBy('products.id', 'DESC')
         ->get();
         return view('products.index', ['products' => $products] );
     }
@@ -138,7 +139,8 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     { 
-        
+        ini_set('max_input_vars', 4000 ); 
+        ini_set('post_max_size', 1024 );  
         $description = $request->get('description');
         $state_id = $request->get('state_id');
         $status = $request->get('status');
@@ -148,6 +150,7 @@ class ProductsController extends Controller
         $update_product = DB::update("UPDATE products SET description =" . "'$description'" . ", state_id =" . "'$state_id'" . ", status =" . "'$status'" . ", updated_at =" . "'$updated_at' WHERE id='$id'");
         
         if ($request->get('productzip')) {
+           
             foreach ($request->get('productzip') as $key => $zip) {
                 $zipid = DB::table('products_zipcode')->insertGetId(
                     ['product_id' => $id,
@@ -156,6 +159,7 @@ class ProductsController extends Controller
                     'created_at' => now()]
                 );
             }
+           
             return redirect('/products')->with('success', 'Product updated!');
         } else {
             return redirect('/products')->with('success', 'Product updated!');
