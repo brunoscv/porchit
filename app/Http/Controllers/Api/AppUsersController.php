@@ -45,7 +45,12 @@ class AppUsersController extends BaseController
         ]);
         $user->save();
 
-        return $this->sendResponse($user->toArray(), 'User created succesfully');
+        $users_app = AppUsers::where('email','=',$request->get('email'))->first();
+        $message = "User created succesfully";
+
+        return response()->json(compact('users_app', 'message'));
+
+        //return $this->sendResponse($user->toArray(), 'User created succesfully');
     }
 
     public function show($id)
