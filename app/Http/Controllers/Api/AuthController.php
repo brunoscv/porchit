@@ -22,9 +22,9 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $users_app = AppUsers::where('email','=',$request->get('email'))->first();
+        $data = AppUsers::where('email','=',$request->get('email'))->first();
 
-        return response()->json(compact('token', 'users_app'));
+        return response()->json(compact('token', 'data'));
 
         // return $this->respondWithToken($token);
     }
