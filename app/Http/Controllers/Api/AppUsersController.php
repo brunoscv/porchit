@@ -43,13 +43,19 @@ class AppUsersController extends BaseController
             'address' => $request->get('address'),
             'zipcode' => $request->get('zipcode'),
         ]);
-        $user->save();
-
+        
+        $users_app = array();
         $users_app = AppUsers::where('email','=',$request->get('email'))->first();
-        $message = "User created succesfully";
+        
+        if (!$users_app) {
+            $user->save();
+            $confirme_user = AppUsers::where('email','=',$request->get('email'))->first();
+            return $this->sendResponse($confirme_user->toArray(), 'User register succesfully');
+        } else {
+            return $this->sendError('User already exists', 400);
+        }
 
-        return response()->json(compact('users_app', 'message'));
-
+        //return response()->json(compact('users_app', 'message', 'error'));
         //return $this->sendResponse($user->toArray(), 'User created succesfully');
     }
 
