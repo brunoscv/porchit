@@ -55,7 +55,7 @@
                                         <td class="text-center"><a class="" href="#" id="modalZip" data-toggle="modal" data-target="#productZip" data-productid="<?= $product->id ?>"> <?= $product->zips ?></button></td>
                                        
                                       
-                                        <td><?= date('m/d/Y', strtotime($product->created_at)) ?></td>
+                                        <td><?= date('m/d/Y h:i A', strtotime($product->created_at)) ?></td>
                                         <td>
                                             <?= $product->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?>
                                         </td>
