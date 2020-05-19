@@ -51,7 +51,7 @@ class UserController extends Controller
         ]);
 
         $user->save();
-        return redirect('/user')->with('success', 'Contact saved!');
+        return redirect('/user')->with('success', 'User saved!');
     }
     /**
      * Display the specified resource.
@@ -96,7 +96,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->get('password'));
 
         $user->save();
-        return redirect('/user')->with('success', 'Contact saved!');
+        return redirect('/user')->with('success', 'User saved!');
 
     }
     /**
@@ -108,6 +108,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         DB::delete(" DELETE FROM users WHERE id=?",[$id]);
-        return redirect('/user')->with('success', 'Contact deleted!');
+        return redirect('/user')->with('success', 'User deleted!');
     }
 }
