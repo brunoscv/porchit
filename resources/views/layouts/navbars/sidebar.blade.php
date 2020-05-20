@@ -98,7 +98,7 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
-                                <i class="fa fa-user"></i> {{ __('User Management') }}
+                                <i class="fa fa-user"></i> {{ __('Admin') }}
                                 </a>
                             </li>
                         </ul>
