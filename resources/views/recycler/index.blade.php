@@ -32,7 +32,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <table class="table align-items-center table-flush">
+                            <table class="table align-items-center table-flush" id="datatable-basic">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Name</th>
@@ -80,6 +80,11 @@
                 </div>
             </div>
         </div>
+        <script>
+            // $(document).ready( function () {
+            //     $('#datatable-basic').DataTable();
+            // } );
+        </script>
         @include('layouts.footers.auth')
     </div>
 @endsection
