@@ -89,11 +89,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('clients') }}">
-                        <i class="fa fa-recycle text-primary"></i> {{ __('Clients') }}
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-users"></i>
                         <span class="nav-link-text">{{ __('Users') }}</span>
@@ -103,7 +98,25 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('User Management') }}
+                                <i class="fa fa-user"></i> {{ __('User Management') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="collapse show" id="navbar-examples">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                <i class="fa fa-truck"></i> {{ __('Drivers') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="collapse show" id="navbar-examples">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('clients') }}">
+                                <i class="fa fa-recycle"></i> {{ __('Recyclers') }}
                                 </a>
                             </li>
                         </ul>
