@@ -23,12 +23,14 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/user/create', ['as' => 'user.form', 'uses' => 'UserController@create']);
 Route::post('/user/store', 'UserController@store')->name('store');
 Route::post('/user/edit', 'UserController@edit')->name('edit');
 Route::post('/user/update', 'UserController@update')->name('update');
 Route::get('/user/{id}/destroy', 'UserController@destroy');
 
+Route::get('/clients', 'RecyclerController@index')->name('clients');
 
 Route::get('/products', 'ProductsController@index')->name('products');
 Route::get('/products/create', 'ProductsController@create')->name('products-create');

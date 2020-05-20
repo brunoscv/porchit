@@ -85,7 +85,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('products') }}">
-                        <i class="ni ni-box-2 text-primary"></i> {{ __('Product') }}
+                        <i class="ni ni-box-2 text-primary"></i> {{ __('Products') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('clients') }}">
+                        <i class="fa fa-recycle text-primary"></i> {{ __('Clients') }}
                     </a>
                 </li>
                 <li class="nav-item">
