@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Pickups;
 use App\Products;
 use App\PickupsProducts;
+use App\PickupsComments;
 use DB;
 use PDO;
 
@@ -28,10 +29,12 @@ class PickupsController extends BaseController
                         ->get();
             $data_aux = array(
                 "id" => $value->id,
+                "users_id" => 1,
                 "latitude" => $value->latitude,
                 "longitude" => $value->longitude,
                 "date_pickup" => $value->date_pickup,
                 "pickup_at" => $value->pickup_at,
+                "comments" => PickupsComments::where(['pickups_id' => $value->id])->get(),
                 "status" => $value->status,
                 "createdAt" => $value->created_at,
             );
@@ -57,7 +60,7 @@ class PickupsController extends BaseController
 
         $dataAll = array();
         $pickups = Pickups::where(['latitude' => $input["latitude"], "longitude" => $input["longitude"]])->get();
-
+    
         $products = array();
         $data = array();
         foreach ($pickups as $key => $value) {
@@ -68,10 +71,12 @@ class PickupsController extends BaseController
                         ->get();
             $data_aux = array(
                 "id" => $value->id,
+                "users_id" => 1,
                 "latitude" => $value->latitude,
                 "longitude" => $value->longitude,
                 "date_pickup" => $value->date_pickup,
                 "pickup_at" => $value->pickup_at,
+                "comments" => PickupsComments::where(['pickups_id' => $value->id])->get(),
                 "status" => $value->status,
                 "createdAt" => $value->created_at,
             );
@@ -97,6 +102,7 @@ class PickupsController extends BaseController
 
         $pickupId = DB::table('pickups')->insertGetId(
             [
+                'users_id' => 1,
                 'latitude' => $request->get('latitude'),
                 'longitude' => $request->get('longitude'),
                 'date_pickup' => $request->get('date_pickup'),
@@ -110,6 +116,18 @@ class PickupsController extends BaseController
                 [
                     'pickups_id' => $pickupId,
                     'products_id' => $product["id"],
+                    'status' => 1,
+                    'created_at' => now()
+                ]
+            );
+        }
+
+        if($request->get('comments')) {
+            $commentId = DB::table('pickups_comments')->insertGetId(
+                [
+                    'users_id' => 1,
+                    'comments' => $request->get('comments'),
+                    'pickups_id' => $pickupId,
                     'status' => 1,
                     'created_at' => now()
                 ]
