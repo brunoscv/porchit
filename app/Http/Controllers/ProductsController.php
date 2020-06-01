@@ -31,9 +31,9 @@ class ProductsController extends Controller
     {
         $products = DB::table('products')
         ->leftJoin('states', 'products.state_id', '=', 'states.id')
-        ->leftJoin('products_zipcode', 'products.id', '=', 'products_zipcode.product_id')
-        ->select(DB::raw('COUNT(products_zipcode.product_id) AS zips'),'products.id', 'products.description AS name', 'states.description AS state', 'products.status', 'products.created_at')
-        ->groupBy('products_zipcode.product_id', 'products.id', 'products.description', 'states.description', 'products.status', 'products.created_at')
+        ->leftJoin('products_zipcodes', 'products.id', '=', 'products_zipcodes.products_id')
+        ->select(DB::raw('COUNT(products_zipcodes.products_id) AS zips'),'products.id', 'products.description AS name', 'states.description AS state', 'products.status', 'products.created_at')
+        ->groupBy('products_zipcodes.products_id', 'products.id', 'products.description', 'states.description', 'products.status', 'products.created_at')
         ->orderBy('products.id', 'DESC')
         ->get();
         return view('products.index', ['products' => $products] );
@@ -56,8 +56,8 @@ class ProductsController extends Controller
         );
 
         foreach ($request->get('productzip') as $key => $zip) {
-            $zipid = DB::table('products_zipcode')->insertGetId(
-                ['product_id' => $productId,
+            $zipid = DB::table('products_zipcodes')->insertGetId(
+                ['products_id' => $productId,
                 'state_id' => $request->get('state_id'),
                 'zipcode' => $zip,
                 'created_at' => now()]
@@ -80,7 +80,7 @@ class ProductsController extends Controller
     }
 
     public function productzipcode(Request $request, $id) {
-        $zipcode = DB::table('products_zipcode')->select('id', 'zipcode')->where('product_id', $id)->get();
+        $zipcode = DB::table('products_zipcodes')->select('id', 'zipcode')->where('products_id', $id)->get();
         
         $ziparr = [
             'success' => true,
@@ -118,10 +118,10 @@ class ProductsController extends Controller
 
         $states = DB::table('states')->get();
 
-        $zipcode = DB::table('products_zipcode')
-        ->select('products_zipcode.zipcode AS zip')
+        $zipcode = DB::table('products_zipcodes')
+        ->select('products_zipcodes.zipcode AS zip')
         ->where([
-            ['products_zipcode.product_id', '=', $id]
+            ['products_zipcodes.products_id', '=', $id]
         ])->get();
         //transform the result in array
         $zipcodeArr = collect($zipcode)->map(function($x){ return (array) $x; })->toArray(); 
@@ -146,14 +146,14 @@ class ProductsController extends Controller
         $status = $request->get('status');
         $updated_at = now();
 
-        $delete_zip = DB::delete("DELETE FROM products_zipcode WHERE product_id = '$id'");
+        $delete_zip = DB::delete("DELETE FROM products_zipcodes WHERE products_id = '$id'");
         $update_product = DB::update("UPDATE products SET description =" . "'$description'" . ", state_id =" . "'$state_id'" . ", status =" . "'$status'" . ", updated_at =" . "'$updated_at' WHERE id='$id'");
         
         if ($request->get('productzip')) {
            
             foreach ($request->get('productzip') as $key => $zip) {
-                $zipid = DB::table('products_zipcode')->insertGetId(
-                    ['product_id' => $id,
+                $zipid = DB::table('products_zipcodes')->insertGetId(
+                    ['products_id' => $id,
                     'state_id' => $state_id,
                     'zipcode' => $zip,
                     'created_at' => now()]
@@ -168,7 +168,7 @@ class ProductsController extends Controller
 
     public function destroy($id)
     {
-        DB::delete(" DELETE FROM products_zipcode WHERE product_id=?",[$id]);
+        DB::delete(" DELETE FROM products_zipcodes WHERE products_id=?",[$id]);
         DB::delete(" DELETE FROM products WHERE id=?",[$id]);
         return redirect('/products')->with('success', 'Product deleted!');
     }

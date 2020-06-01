@@ -26,7 +26,14 @@ Route::group(['middleware' => ['apiJwt']], function() {
     
     Route::post('auth/logout', 'Api\\AuthController@logout');
     Route::post('auth/me', 'Api\\AuthController@me');
+    
     Route::get('users', 'Api\\UserController@index');
+    
+    Route::get('products', 'Api\\ProductsController@index');
+
+    Route::get('pickups', 'Api\\PickupsController@index');
+    Route::get('pickups/location', 'Api\\PickupsController@location');
+    Route::post('pickups/location', 'Api\\PickupsController@store');
     
     Route::get('user/list', 'Api\\AppUsersController@index');
 });

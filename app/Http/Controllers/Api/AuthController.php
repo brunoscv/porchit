@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use ymon\JWTAuth\PayloadFactory;
 use App\AppUsers;
 
 class AuthController extends Controller
@@ -22,11 +23,22 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $data = AppUsers::where('email','=',$request->get('email'))->first();
-
-        return response()->json(compact('token', 'data'));
-
+        $user = AppUsers::where('email','=', $request->get('email'))->first();
+        $data = [
+            'id' => $user->id,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+            'email' => $user->email,
+            'address' =>$user->address,
+            'zipcode' => $user->zipcode,
+        ];
+        $token = JWTAuth::fromUser($user, $data);
+        //return $token;
+        //$payload = JWTAuth::parseToken()->getPayload();
+        // then either of
+        //return $payload->get('zipcode');
         // return $this->respondWithToken($token);
+        return response()->json(compact('token', 'data'));
     }
     /**
      * Get the authenticated User.

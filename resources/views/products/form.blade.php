@@ -18,7 +18,7 @@
                     </div>
                     <div class="card-body">
                         <!-- New Products Form -->
-                        <form action="/products/save" method="POST" class="form-horizontal">
+                        <form action="{{ route('store') }}" method="POST" class="form-horizontal">
                             {{ csrf_field() }}
 
                             <div class="row">
