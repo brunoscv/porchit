@@ -15,7 +15,7 @@ class ProductsZipcodeTable extends Migration
     {
         Schema::create('products_zipcodes', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
+            $table->integer('products_id');
             $table->text('state_id');
             $table->text('zipcode');
             $table->timestamps();
