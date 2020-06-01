@@ -13,7 +13,7 @@ class ProductsZipcodeTable extends Migration
      */
     public function up()
     {
-        Schema::create('products_zipcode', function (Blueprint $table) {
+        Schema::create('products_zipcodes', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id');
             $table->text('state_id');
@@ -29,6 +29,6 @@ class ProductsZipcodeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products_zipcode');
+        Schema::dropIfExists('products_zipcodes');
     }
 }
