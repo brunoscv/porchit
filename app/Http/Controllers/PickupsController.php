@@ -22,4 +22,20 @@ class PickupsController extends Controller
 
         return view('pickups.index', ['pickups' => $pickups] );
     }
+
+    public function productzipcode(Request $request, $id) {
+        $products = DB::table('pickups_products')
+                        ->leftJoin('products_zipcodes', 'pickups_products.products_id', '=', 'products_zipcodes.id')
+                        ->leftJoin('products', 'products_zipcodes.products_id', '=', 'products.id')
+                        ->select('products.description', 'products_zipcodes.zipcode')
+                        ->where('pickups_id', $id)->get();
+        
+        $prodarr = [
+            'success' => true,
+            'result' => $products
+        ];
+        
+        $result = json_encode($prodarr);
+        return $prodarr;
+    }
 }

@@ -49,7 +49,7 @@
                                     <tr>
                                         <!-- <td><?= $pickup->id ?></td> -->
                                         <td><?= $pickup->firstname . ' '. $pickup->lastname ?></td>
-                                        <td class="text-center"><a class="" href="#" id="modalZip" data-toggle="modal" data-target="#productZip" data-productid="<?= $pickup->id ?>"> <?= $pickup->products ?></a></td>
+                                        <td class="text-center"><a class="" href="#" id="modalZip" data-toggle="modal" data-target="#productZip" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->products ?></a></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
                                         <td class="text-center"> <a class="" href="#" id="modalZip" data-toggle="modal" data-target="#productZip" data-productid="<?= $pickup->id ?>"> <?= $pickup->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?></a></td>
@@ -94,7 +94,7 @@
                                 <th class="text-center"><?= gettext('Zip') ?></th>                                            
                             </tr><!--end tr-->
                         </thead>
-                        <tbody id="resultZip"><!-- Get the information from Mustache.js --> </tbody>
+                        <tbody id=""><!-- Get the information from Mustache.js --> </tbody>
                     </table>                    
                 </div>
             </div>
@@ -142,14 +142,15 @@
   
         $('#productZip').on('shown.bs.modal', function (e) {
             
-            var productId = $(e.relatedTarget).data('productid');
+            var pickupId = $(e.relatedTarget).data('pickupid');
+            //alert(pickupId);
             
             $.ajax({
-                url : "pickups/productzipcode/" + productId, 
+                url : "pickups/productzipcode/" + pickupId, 
                 type : 'GET',
                 /* context: this, */
                 dataType:"json",
-                data : {'productId' : productId},
+                data : {'pickupId' : pickupId},
                 success : function(data){
                     $('#resultZip').html("");
                     var json_obj = data.result; //parse JSON
@@ -158,7 +159,7 @@
                         for (var i in json_obj) {
                             
                          /*    console.log(json_obj[i]["zipcode"]); */
-                            $('#resultZip').append("<tr>"+ "<td>"+ json_obj[i]["id"] +"</td>" + "<td class='text-center'>"+ json_obj[i]["zipcode"] +"</td>" + "</tr>");
+                            $('#resultZip').append("<tr>"+ "<td>"+ json_obj[i]["description"] +"</td>" + "<td class='text-center'>"+ json_obj[i]["zipcode"] +"</td>" + "</tr>");
                         }   
                     }
                 },

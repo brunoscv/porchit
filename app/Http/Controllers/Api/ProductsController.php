@@ -25,8 +25,8 @@ class ProductsController extends BaseController
         
         //Get the extra information from logged user
         $payload = JWTAuth::setToken($this->token)->getPayload();
-        //$zip = $payload["user"]->zipcode;
-        $zip = "70001";
+        $zip = $payload["user"]->zipcode;
+        //$zip = "70001";
         //
         $zipcodes = ProductsZipcode::where('zipcode', $zip)->get();
 

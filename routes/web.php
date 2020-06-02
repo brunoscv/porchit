@@ -44,6 +44,7 @@ Route::get('/products/{id}/destroy', 'ProductsController@destroy')->name('produc
 
 
 Route::get('/pickups', 'PickupsController@index')->name('pickups');
+Route::get('/pickups/productzipcode/{id}', 'PickupsController@productzipcode');
 
 
 
