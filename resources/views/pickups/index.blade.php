@@ -52,7 +52,7 @@
                                         <td class="text-center"><a class="" href="#" id="modalZip" data-toggle="modal" data-target="#productZip" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->products ?></a></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
-                                        <td class="text-center"> <a class="" href="#" id="modalZip" data-toggle="modal" data-target="#productZip" data-productid="<?= $pickup->id ?>"> <?= $pickup->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?></a></td>
+                                        <td class="text-center"> <a class="" href="#" id="modalActive" data-toggle="modal" data-target="#pickupActive" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?></a></td>
                                          <!-- <td class="">
                                            <a class="mr-2" href="{{ route('products-edit', $pickup->id) }}"><i class="fas fa-edit"></i></a>
                                             <a class="mr-2"  href="products/{{ $pickup->id }}/destroy"><i class="fa fa-trash"></i></a> 
@@ -107,34 +107,30 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="productZip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="pickupActive" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><?= gettext('Products per Zipcode') ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive dash-social">
-                    
-                    <table class="table "><!--listTable-->
-                        <thead class="thead-light">
-                            <tr> 
-                                <th><?= gettext('Product Name') ?></th>                                        
-                                <th class="text-center"><?= gettext('Zipcode') ?></th>                                            
-                            </tr><!--end tr-->
-                        </thead>
-                        <tbody id="resultZip"><!-- Get the information from Mustache.js --> </tbody>
-                    </table>                    
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-            </div>
-            </div>
+            
+                <form id="" class="form-horizontal">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modal-title-notification">Confimation</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="py-3 text-center">
+                            <i class="ni ni-bell-55 ni-3x"></i>
+                            <h4 class="heading mt-4">Do you wanna proceed?</h4>
+                            <p>Continuing, collection is authorized.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="activePickup">Yes, Active!</button>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                </form>
+                
         </div>
     </div>
 
@@ -158,14 +154,36 @@
                     console.log(data);
                         for (var i in json_obj) {
                             
-                         /*    console.log(json_obj[i]["zipcode"]); */
+                        /*    console.log(json_obj[i]["zipcode"]); */
                             $('#resultZip').append("<tr>"+ "<td>"+ json_obj[i]["description"] +"</td>" + "<td class='text-center'>"+ json_obj[i]["zipcode"] +"</td>" + "</tr>");
                         }   
                     }
                 },
                 fail: function(data) {
-                   /*  console.log(data); */
+                /*  console.log(data); */
                 } 
+            });
+           
+        });
+
+        $('#pickupActive').on('shown.bs.modal', function (e) {
+            
+            var pickupId = $(e.relatedTarget).data('pickupid');
+            
+            $('#activePickup').click( function() { 
+                $.ajax({
+                    url : "pickups/activepickup/" + pickupId, 
+                    type : 'GET',
+                    /* context: this, */
+                    dataType:"json",
+                    data : {'pickupId' : pickupId},
+                    success : function(data){
+                        window.location.href = "<?= route('pickups')?>";
+                    },
+                    fail: function(data) {
+                    /*  console.log(data); */
+                    } 
+                });
             });
         });
     </script>

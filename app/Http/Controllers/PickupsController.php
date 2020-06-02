@@ -38,4 +38,16 @@ class PickupsController extends Controller
         $result = json_encode($prodarr);
         return $prodarr;
     }
+
+    public function activepickup(Request $request, $id) {
+        
+        $update_pickup = DB::update("UPDATE pickups SET status = '1' WHERE id='$id'");
+        
+        $active = [
+            'success' => true
+        ];
+        
+        $result = json_encode($active);
+        return $active;
+    }
 }
