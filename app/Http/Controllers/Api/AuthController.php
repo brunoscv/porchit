@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use ymon\JWTAuth\PayloadFactory;
+use Tymon\JWTAuth\PayloadFactory;
 use App\AppUsers;
 
 class AuthController extends Controller
@@ -24,7 +24,7 @@ class AuthController extends Controller
         }
 
         $user = AppUsers::where('email','=', $request->get('email'))->first();
-        $data = [
+        $customClaims = [
             'id' => $user->id,
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
@@ -32,13 +32,12 @@ class AuthController extends Controller
             'address' =>$user->address,
             'zipcode' => $user->zipcode,
         ];
-        $token = JWTAuth::fromUser($user, $data);
-        //return $token;
-        //$payload = JWTAuth::parseToken()->getPayload();
-        // then either of
-        //return $payload->get('zipcode');
-        // return $this->respondWithToken($token);
-        return response()->json(compact('token', 'data'));
+        $token = JWTAuth::fromUser($user, $customClaims);
+        $payload = JWTAuth::setToken($token)->getPayload();
+        
+        //print_r($payload["user"]->zipcode); exit;
+       
+        return response()->json(compact('token', 'customClaims', 'payload'));
     }
     /**
      * Get the authenticated User.

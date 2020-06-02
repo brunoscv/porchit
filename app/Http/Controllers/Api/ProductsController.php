@@ -10,11 +10,23 @@ use App\ProductsZipcode;
 
 class ProductsController extends BaseController
 {   
+    protected $user;
+    protected $token;
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+        $this->token = JWTAuth::getToken();
+    }
+
     public function index()
     {
-        //$user = JWTAuth::parseToken()->authenticate();
+        
         $dataAll = array();
-        $zip = 70001;
+        
+        //Get the extra information from logged user
+        $payload = JWTAuth::setToken($this->token)->getPayload();
+        $zip = $payload["user"]->zipcode;
+        //
         $zipcodes = ProductsZipcode::where('zipcode', $zip)->get();
 
         $data = array();

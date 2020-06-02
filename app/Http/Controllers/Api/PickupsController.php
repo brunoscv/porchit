@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Pickups;
 use App\Products;
 use App\PickupsProducts;
@@ -14,10 +15,20 @@ use PDO;
 
 class PickupsController extends BaseController
 {
+    protected $user;
+    protected $token;
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+        $this->token = JWTAuth::getToken();
+    }
     public function index()
-    {   
+    {  
         $dataAll = array();
         $pickups = Pickups::all();
+
+        //Get the extra information from logged user
+        $payload = JWTAuth::setToken($this->token)->getPayload();
 
         $products = array();
         $data = array();
@@ -29,7 +40,7 @@ class PickupsController extends BaseController
                         ->get();
             $data_aux = array(
                 "id" => $value->id,
-                "users_id" => 1,
+                "users_id" => $this->user->id,
                 "latitude" => $value->latitude,
                 "longitude" => $value->longitude,
                 "date_pickup" => $value->date_pickup,
@@ -71,7 +82,7 @@ class PickupsController extends BaseController
                         ->get();
             $data_aux = array(
                 "id" => $value->id,
-                "users_id" => 1,
+                "users_id" => $this->user->id,
                 "latitude" => $value->latitude,
                 "longitude" => $value->longitude,
                 "date_pickup" => $value->date_pickup,
@@ -102,7 +113,7 @@ class PickupsController extends BaseController
 
         $pickupId = DB::table('pickups')->insertGetId(
             [
-                'users_id' => 1,
+                'users_id' => $this->user->id,
                 'latitude' => $request->get('latitude'),
                 'longitude' => $request->get('longitude'),
                 'date_pickup' => $request->get('date_pickup'),
@@ -125,7 +136,7 @@ class PickupsController extends BaseController
         if($request->get('comments')) {
             $commentId = DB::table('pickups_comments')->insertGetId(
                 [
-                    'users_id' => 1,
+                    'users_id' => $this->user->id,
                     'comments' => $request->get('comments'),
                     'pickups_id' => $pickupId,
                     'status' => 1,
