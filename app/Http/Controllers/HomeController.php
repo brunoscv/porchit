@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Pickups;
+use App\AppUsers;
+use App\User;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+
+        $pickups = Pickups::count();
+        $users = User::count();
+        $recyclers = AppUsers::count();
+        return view('dashboard', ['pickups' => $pickups, 'users' => $users,  'recyclers' => $recyclers]);
     }
 }
