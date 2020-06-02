@@ -43,6 +43,9 @@ Route::get('/products/productzipcode/{id}', 'ProductsController@productzipcode')
 Route::get('/products/{id}/destroy', 'ProductsController@destroy')->name('product-delete');
 
 
+Route::get('/pickups', 'PickupsController@index')->name('pickups');
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);

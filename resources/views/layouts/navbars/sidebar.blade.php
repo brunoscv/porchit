@@ -80,12 +80,17 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                        <i class="ni ni-tv-2"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('products') }}">
-                        <i class="ni ni-box-2 text-primary"></i> {{ __('Products') }}
+                        <i class="ni ni-box-2"></i> {{ __('Products') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('pickups') }}">
+                        <i class="ni ni-box-2"></i> {{ __('Pickups') }}
                     </a>
                 </li>
                 <li class="nav-item">

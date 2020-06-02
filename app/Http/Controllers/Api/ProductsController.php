@@ -25,20 +25,32 @@ class ProductsController extends BaseController
         
         //Get the extra information from logged user
         $payload = JWTAuth::setToken($this->token)->getPayload();
-        $zip = $payload["user"]->zipcode;
+        //$zip = $payload["user"]->zipcode;
+        $zip = "70001";
         //
         $zipcodes = ProductsZipcode::where('zipcode', $zip)->get();
 
         $data = array();
+        $product = array();
         foreach ($zipcodes as $key => $value) {
+            $product = Products::where('id', $value->products_id)->get();
             $data_aux = array(
                 "id" => $value->id,
                 "products_id" => $value->products_id,
                 "state" => $value->state_id,
-                "product" => Products::where('id', $value->products_id)->get(),
+                // "product" => $product,
                 "zipcode" => $value->zipcode,
                 "createdAt" => $value->created_at,
             );
+
+            $data_aux["product"] = array(
+                "id" => $value->id,
+                "description" => $product[0]->description,
+                "state_id" => $product[0]->state_id,
+                "status" => $product[0]->status,
+                "created_at" => $product[0]->created_at,
+                "updated_at" => $product[0]->updated_at,
+            ); 
 
             array_push($data, $data_aux);
         }
