@@ -139,7 +139,7 @@
         $('#productZip').on('shown.bs.modal', function (e) {
             
             var pickupId = $(e.relatedTarget).data('pickupid');
-            alert(pickupId);
+            //alert(pickupId);
             
             $.ajax({
                 url : "pickups/productzipcode/" + pickupId, 
