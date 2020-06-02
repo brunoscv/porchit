@@ -40,9 +40,15 @@ class PickupsController extends Controller
     }
 
     public function activepickup(Request $request, $id) {
-        
-        $update_pickup = DB::update("UPDATE pickups SET status = '1' WHERE id='$id'");
-        
+
+        $status_pickup = Pickups::find($id);
+
+        if($status_pickup["status"] == "1") {
+            $update_pickup = DB::update("UPDATE pickups SET status = '0' WHERE id='$id'");
+        } else {
+            $update_pickup = DB::update("UPDATE pickups SET status = '1' WHERE id='$id'");
+        }
+       
         $active = [
             'success' => true
         ];
