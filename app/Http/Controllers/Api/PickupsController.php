@@ -41,7 +41,7 @@ class PickupsController extends BaseController
                         ->get();
             $data_aux = array(
                 "id" => $value->id,
-                "users_id" => $this->user->id,
+                "users_id" => $this->user["id"],
                 "latitude" => $value->latitude,
                 "longitude" => $value->longitude,
                 "date_pickup" => $value->date_pickup,
