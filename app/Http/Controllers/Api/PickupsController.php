@@ -78,7 +78,7 @@ class PickupsController extends BaseController
             $pickups = Pickups::where(['zipcode' => $input["zipcode"], 'status' => 1])->get();
         }
 
-        $user = AppUsers::find($this->user->id);
+        //$user = AppUsers::find($this->user->id);
 
         // print_r($user); exit;
     
