@@ -42,6 +42,7 @@ class AppUsersController extends BaseController
             'phone' => $request->get('phone'),
             'address' => $request->get('address'),
             'zipcode' => $request->get('zipcode'),
+            'device' => "user"
         ]);
         
         $users_app = array();

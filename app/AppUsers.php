@@ -18,7 +18,7 @@ class AppUsers extends Authenticatable implements JWTSubject
     */
 
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password', 'phone', 'address', 'zipcode'
+        'firstname', 'lastname', 'email', 'password', 'phone', 'address', 'zipcode', 'device'
     ];
 
     /**
@@ -60,9 +60,9 @@ class AppUsers extends Authenticatable implements JWTSubject
             'user' => [
                 'id' => $this->id,
                 'firstname' => $this->firstname,
-                'zipcode' => $this->zipcode
+                'zipcode' => $this->zipcode,
+                'device' => $this->device
             ]
         ];
     }
-
 }

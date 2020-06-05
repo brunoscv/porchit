@@ -17,7 +17,7 @@ class AuthController extends Controller
     */
     public function login(Request $request)
     {
-        $credentials = $request->only(['email', 'password']);
+        $credentials = $request->only(['email', 'password', 'device']);
 
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -31,6 +31,7 @@ class AuthController extends Controller
             'email' => $user->email,
             'address' =>$user->address,
             'zipcode' => $user->zipcode,
+            'device' => $user->device
         ];
         $token = JWTAuth::fromUser($user, $customClaims);
         $payload = JWTAuth::setToken($token)->getPayload();
@@ -77,7 +78,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 2592000
+            'expires_in' => auth('api')->factory() * 2592000
         ]);
     }
 }
