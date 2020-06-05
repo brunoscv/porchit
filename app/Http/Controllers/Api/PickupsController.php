@@ -26,7 +26,7 @@ class PickupsController extends BaseController
     public function index()
     {  
         $dataAll = array();
-        $pickups = Pickups::all();
+        $pickups = Pickups::where(["status" => 1]);
 
         //Get the extra information from logged user
         $payload = JWTAuth::setToken($this->token)->getPayload();
@@ -73,10 +73,10 @@ class PickupsController extends BaseController
 
         $dataAll = array();
         if( ( (!$input) || !$input["zipcode"]) || ($input["zipcode"] == NULL) || ($input["zipcode"] == "") || $input["zipcode"] == null) {
-            $pickups = Pickups::where(['status' => 1])->get();
+            $pickups = Pickups::where(['status' => 1, 'pickup_status' => 0])->get();
 
         } else {
-            $pickups = Pickups::where(['zipcode' => $input["zipcode"], 'status' => 1])->get();
+            $pickups = Pickups::where(['zipcode' => $input["zipcode"], 'status' => 1, 'pickup_status' => 0])->get();
         }
 
         //$user = AppUsers::find($this->user["id"]);
@@ -170,7 +170,7 @@ class PickupsController extends BaseController
         
         $payload = JWTAuth::setToken($this->token)->getPayload();
         $where = $payload["user"]->device == "user" ? "users_id" : "drivers_id";
-        $pickups = Pickups::where(["{$where}" => $payload["user"]->id, 'status' => 1])->get();
+        $pickups = Pickups::where(["{$where}" => $payload["user"]->id, 'status' => 1, 'pickup_status' => 1])->get();
         //print_r($pickups); exit;
     
         $products = array();
