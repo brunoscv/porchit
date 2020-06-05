@@ -78,7 +78,7 @@ class PickupsController extends BaseController
             $pickups = Pickups::where(['zipcode' => $input["zipcode"], 'status' => 1])->get();
         }
 
-        //$user = AppUsers::find($this->user->id);
+        //$user = AppUsers::find($this->user["id"]);
 
         // print_r($user); exit;
     
@@ -125,7 +125,7 @@ class PickupsController extends BaseController
 
         $pickupId = DB::table('pickups')->insertGetId(
             [
-                'users_id' => $this->user->id,
+                'users_id' => $this->user["id"],
                 'latitude' => $request->get('latitude'),
                 'longitude' => $request->get('longitude'),
                 'zipcode' => $payload["user"]->zipcode,
@@ -150,7 +150,7 @@ class PickupsController extends BaseController
         if($request->get('comments')) {
             $commentId = DB::table('pickups_comments')->insertGetId(
                 [
-                    'users_id' => $this->user->id,
+                    'users_id' => $this->user["id"],
                     'comments' => $request->get('comments'),
                     'pickups_id' => $pickupId,
                     'status' => 1,
