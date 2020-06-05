@@ -35,8 +35,9 @@ class PickupsController extends BaseController
         $data = array();
         foreach ($pickups as $key => $value) {
             $products = DB::table('pickups_products')
-                            ->select('pickups_products.products_id','products.description')
-                            ->join('products','products.id','=','pickups_products.products_id')
+                            ->select('pickups_products.id','products.description')
+                            ->join('products_zipcodes','products_zipcodes.id','=','pickups_products.products_id')
+                            ->join('products','products.id','=','products_zipcodes.products_id')
                             ->where(['pickups_products.pickups_id' => $value->id])
                         ->get();
             $data_aux = array(
@@ -54,7 +55,7 @@ class PickupsController extends BaseController
             $data2=array();
             foreach ($products as $key => $value2) {
                 $data_aux2 = array(
-                    "product_id" => $value2->products_id,
+                    "product_id" => $value2->id,
                     "description" => $value2->description,
                 );
                 array_push($data2, $data_aux2);
@@ -176,8 +177,9 @@ class PickupsController extends BaseController
         $data = array();
         foreach ($pickups as $key => $value) {
             $products = DB::table('pickups_products')
-                            ->select('pickups_products.products_id','products.description')
-                            ->join('products','products.id','=','pickups_products.products_id')
+                            ->select('pickups_products.id','products.description')
+                            ->join('products_zipcodes','products_zipcodes.id','=','pickups_products.products_id')
+                            ->join('products','products.id','=','products_zipcodes.products_id')
                             ->where(['pickups_products.pickups_id' => $value->id])
                         ->get();
             $data_aux = array(
@@ -196,7 +198,7 @@ class PickupsController extends BaseController
             $data2=array();
             foreach ($products as $key => $value2) {
                 $data_aux2 = array(
-                    "product_id" => $value2->products_id,
+                    "product_id" => $value2->id,
                     "description" => $value2->description,
                 );
                 array_push($data2, $data_aux2);
