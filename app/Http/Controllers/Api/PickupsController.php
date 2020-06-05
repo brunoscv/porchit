@@ -86,8 +86,9 @@ class PickupsController extends BaseController
         $data = array();
         foreach ($pickups as $key => $value) {
             $products = DB::table('pickups_products')
-                            ->select('pickups_products.products_id','products.description')
-                            ->join('products','products.id','=','pickups_products.products_id')
+                            ->select('pickups_products.id','products.description')
+                            ->join('products_zipcodes','products_zipcodes.id','=','pickups_products.products_id')
+                            ->join('products','products.id','=','products_zipcode.products_id')
                             ->where(['pickups_products.pickups_id' => $value->id])
                         ->get();
             $data_aux = array(
