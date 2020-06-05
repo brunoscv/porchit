@@ -168,7 +168,7 @@ class PickupsController extends BaseController
         
         $payload = JWTAuth::setToken($this->token)->getPayload();
         $where = $payload["user"]->device == "user" ? "users_id" : "drivers_id";
-        $pickups = Pickups::where(["{$where}" => $this->user->id, 'status' => 1])->get();
+        $pickups = Pickups::where(["{$where}" => $payload["user"]->id, 'status' => 1])->get();
         //print_r($pickups); exit;
     
         $products = array();
@@ -186,6 +186,7 @@ class PickupsController extends BaseController
                 "longitude" => $value->longitude,
                 "date_pickup" => $value->date_pickup,
                 "pickup_at" => $value->pickup_at,
+                'drivers_id' => $value->drivers_id,
                 "comments" => PickupsComments::where(['pickups_id' => $value->id])->get(),
                 "status" => $value->status,
                 "createdAt" => $value->created_at,
