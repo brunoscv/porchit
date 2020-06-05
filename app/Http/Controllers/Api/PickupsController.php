@@ -214,8 +214,9 @@ class PickupsController extends BaseController
         //Get the extra information from logged user
         $now = now();
         $payload = JWTAuth::setToken($this->token)->getPayload();
+        $drivers_id = $payload["user"]->id;
 
-        $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "'$now'" . ", pickup_status =" . "'1'" . ", drivers_id =" . "'{$this->user->id}'" . ", updated_at =" . "'$now' WHERE id='$id'");
+        $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "'$now'" . ", pickup_status =" . "'1'" . ", drivers_id =" . "'{$drivers_id}'" . ", updated_at =" . "'$now' WHERE id='$id'");
 
         return $this->sendResponse($input, 'Pickup Confirmed succesfully');
     }
