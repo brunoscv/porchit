@@ -106,7 +106,7 @@ class PickupsController extends BaseController
             $data2=array();
             foreach ($products as $key => $value2) {
                 $data_aux2 = array(
-                    "product_id" => $value2->products_id,
+                    "product_id" => $value2->id,
                     "description" => $value2->description,
                 );
                 array_push($data2, $data_aux2);
