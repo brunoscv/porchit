@@ -17,6 +17,7 @@ class AuthController extends Controller
     */
     public function login(Request $request)
     {
+
         $credentials = $request->only(['email', 'password', 'device']);
 
         if (!$token = auth('api')->attempt($credentials)) {
@@ -78,7 +79,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory() * 2592000
+            'expires_in' => ""
         ]);
     }
 }
