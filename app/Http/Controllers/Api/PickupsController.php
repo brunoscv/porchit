@@ -70,10 +70,6 @@ class PickupsController extends BaseController
     public function location(Request $request)
     {
 
-        $refreshed = JWTAuth::refresh(JWTAuth::getToken());
-        $user = JWTAuth::setToken($refreshed)->toUser();
-        header('Authorization: Bearer ' . $refreshed);
-
         $input = $request->all();
 
         $dataAll = array();

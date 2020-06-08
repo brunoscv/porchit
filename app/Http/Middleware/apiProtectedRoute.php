@@ -58,4 +58,27 @@ class apiProtectedRoute extends BaseMiddleware
 
         return $response;
     }
+
+    // public function handle($request, Closure $next) {
+    //     try {
+    //         $user = JWTAuth::parseToken()->authenticate();
+    //         if (! $user = JWTAuth::parseToken()->authenticate() )
+    //         {
+    //             return response()->json([
+    //                'code'   => 101, // means auth error in the api,
+    //                'response' => null // nothing to show 
+    //             ]);
+    //         }
+    //     } 
+    //     catch (\Exception $e) {
+    //         if($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
+    //             return response()->json(['status' => 'Token is invalid']);
+    //         } else if($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+    //             return response()->json(['status' => 'Token is expired']);
+    //         } else {
+    //             return response()->json(['status' => 'Authorization Token not found']);
+    //         }
+    //     }
+    //     return $next($request);
+    // }
 }
