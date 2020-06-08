@@ -62,13 +62,13 @@ class apiProtectedRoute extends BaseMiddleware
     public function handle($request, Closure $next) {
         try {
             $user = JWTAuth::parseToken()->authenticate();
-            if (! $user = JWTAuth::parseToken()->authenticate() )
-            {
-                return response()->json([
-                   'code'   => 101, // means auth error in the api,
-                   'response' => null // nothing to show 
-                ]);
-            }
+            // if (! $user )
+            // {
+            //     return response()->json([
+            //        'code'   => 101, // means auth error in the api,
+            //        'response' => null // nothing to show 
+            //     ]);
+            // }
         } 
         catch (\Exception $e) {
             if($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
