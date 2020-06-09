@@ -33,11 +33,11 @@ Route::group(['middleware' => ['apiJwt']], function() {
 
     Route::get('pickups', 'Api\\PickupsController@index');
     Route::get('pickups/location', 'Api\\PickupsController@location');
-    Route::post('pickups/location', 'Api\\PickupsController@store');
-
     Route::get('pickups/users', 'Api\\PickupsController@users');
     Route::get('pickups/confirmation', 'Api\\PickupsController@confirmation');
     Route::put('pickups/confirmation', 'Api\\PickupsController@confirmation');
+    Route::put('pickups/reset', 'Api\\PickupsController@reset');
+    Route::post('pickups/location', 'Api\\PickupsController@store');
     
     Route::get('user/list', 'Api\\AppUsersController@index');
 });

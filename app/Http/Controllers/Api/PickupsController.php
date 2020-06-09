@@ -224,4 +224,18 @@ class PickupsController extends BaseController
 
         return $this->sendResponse($input, 'Pickup Confirmed succesfully');
     }
+
+    public function reset(Request $request)
+    {
+        $input = $request->all();
+        $id = $input["pickup_id"];
+        //Get the extra information from logged user
+        $now = now();
+        $payload = JWTAuth::setToken($this->token)->getPayload();
+        
+
+        $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "'$now'" . ", pickup_at =" . "NULL" . ", pickup_status =" . "'0'" . ", drivers_id =" . "NULL" . ", updated_at =" . "'$now' WHERE id='$id'");
+
+        return $this->sendResponse($input, 'Pickup Reseted succesfully');
+    }
 }
