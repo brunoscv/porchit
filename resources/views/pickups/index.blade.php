@@ -90,7 +90,7 @@
                     <table class="table "><!--listTable-->
                         <thead class="thead-light">
                             <tr> 
-                                <th><?= gettext('Cod') ?></th>                                        
+                                <th><?= gettext('Product') ?></th>                                        
                                 <th class="text-center"><?= gettext('Zip') ?></th>                                            
                             </tr><!--end tr-->
                         </thead>
@@ -121,8 +121,8 @@
                     <div class="modal-body">
                         <div class="py-3 text-center">
                             <i class="ni ni-bell-55 ni-3x"></i>
-                            <h4 class="heading mt-4">Do you wanna proceed?</h4>
-                            <p>If you continue, the current Pickup status it will change.</p>
+                            <h4 class="heading mt-4">Are you sure ?</h4>
+                            <!-- <p>If you continue, the current Pickup status it will change.</p> -->
                         </div>
                     </div>
                     <div class="modal-footer">
