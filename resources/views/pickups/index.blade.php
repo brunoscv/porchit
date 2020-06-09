@@ -52,7 +52,7 @@
                                         <td><?= $pickup->firstname . ' '. $pickup->lastname ?></td>
                                         <td class="text-center"><a class="" href="#" data-toggle="modal" data-target="#productZip" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->products ?></a></td>
                                         <td colspan="4"><?= $pickup->comments ?></td>
-                                        <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->date_pickuṕ)) ?></td>
+                                        <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->date_pickup)) ?></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
                                         <td class="text-center"> <a class="" href="#" data-toggle="modal" data-target="#pickupActive" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?></a></td>
                                          <!-- <td class="">
