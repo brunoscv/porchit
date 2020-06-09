@@ -37,6 +37,7 @@
                                         <!-- <th scope="col">#</th> -->
                                         <th class="text-center" scope="col">Recycler</th>
                                         <th class="text-center" scope="col">Products</th>
+                                        <th class="text-center" scope="col">Comments</th>
                                         <th class="text-center" scope="col">Pickup Date</th>
                                         <th class="text-center" scope="col">Creation Date</th>
                                         <th  class="text-center"scope="col">Status</th>
@@ -50,7 +51,8 @@
                                         <!-- <td><?= $pickup->id ?></td> -->
                                         <td><?= $pickup->firstname . ' '. $pickup->lastname ?></td>
                                         <td class="text-center"><a class="" href="#" data-toggle="modal" data-target="#productZip" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->products ?></a></td>
-                                        <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
+                                        <td colspan="4"><?= $pickup->comments ?></td>
+                                        <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->date_pickuṕ)) ?></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
                                         <td class="text-center"> <a class="" href="#" data-toggle="modal" data-target="#pickupActive" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?></a></td>
                                          <!-- <td class="">
