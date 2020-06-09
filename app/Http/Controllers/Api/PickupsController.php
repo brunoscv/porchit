@@ -42,7 +42,7 @@ class PickupsController extends BaseController
                         ->get();
             $data_aux = array(
                 "id" => $value->id,
-                "users_id" => $this->user["id"],
+                "users_id" =>$payload["user"]->id,
                 "latitude" => $value->latitude,
                 "longitude" => $value->longitude,
                 "date_pickup" => $value->date_pickup,
@@ -128,7 +128,7 @@ class PickupsController extends BaseController
 
         $pickupId = DB::table('pickups')->insertGetId(
             [
-                'users_id' => $this->user["id"],
+                'users_id' => $payload["user"]->id,
                 'latitude' => $request->get('latitude'),
                 'longitude' => $request->get('longitude'),
                 'zipcode' => $payload["user"]->zipcode,
@@ -153,7 +153,7 @@ class PickupsController extends BaseController
         if($request->get('comments')) {
             $commentId = DB::table('pickups_comments')->insertGetId(
                 [
-                    'users_id' => $this->user["id"],
+                    'users_id' =>$payload["user"]->id,
                     'comments' => $request->get('comments'),
                     'pickups_id' => $pickupId,
                     'status' => 1,
