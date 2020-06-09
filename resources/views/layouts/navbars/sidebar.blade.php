@@ -111,7 +111,7 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('drivers') }}">
                                 <i class="fa fa-truck"></i> {{ __('Drivers') }}
                                 </a>
                             </li>

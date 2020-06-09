@@ -9,7 +9,7 @@ class RecyclerController extends Controller
 {
     public function index(AppUsers $model)
     {
-        $app_users = AppUsers::all();
+        $app_users = AppUsers::where(["device" => "user"])->get();
         return view('recycler.index', compact('app_users'));
     }
 }

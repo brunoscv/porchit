@@ -48,6 +48,12 @@ Route::get('/pickups/productzipcode/{id}', 'PickupsController@productzipcode');
 Route::get('/pickups/activepickup/{id}', 'PickupsController@activepickup');
 
 
+Route::get('/drivers', 'DriversController@index')->name('drivers');
+Route::get('/drivers/activedriver/{$id}', 'DriversController@activedriver')->name('active');
+
+
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
