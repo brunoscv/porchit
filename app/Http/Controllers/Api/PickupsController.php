@@ -134,7 +134,7 @@ class PickupsController extends BaseController
                 'zipcode' => $payload["user"]->zipcode,
                 'date_pickup' => $request->get('date_pickup'),
                 'pickup_status' => 0,
-                'status' => 0,
+                'status' => 1,
                 'created_at' => now()
             ]
         );
@@ -153,7 +153,7 @@ class PickupsController extends BaseController
         if($request->get('comments')) {
             $commentId = DB::table('pickups_comments')->insertGetId(
                 [
-                    'users_id' =>$payload["user"]->id,
+                    'users_id' => $payload["user"]->id,
                     'comments' => $request->get('comments'),
                     'pickups_id' => $pickupId,
                     'status' => 1,
@@ -232,7 +232,6 @@ class PickupsController extends BaseController
         //Get the extra information from logged user
         $now = now();
         $payload = JWTAuth::setToken($this->token)->getPayload();
-        
 
         $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "'$now'" . ", pickup_at =" . "NULL" . ", pickup_status =" . "'0'" . ", drivers_id =" . "NULL" . ", updated_at =" . "'$now' WHERE id='$id'");
 
