@@ -96,7 +96,7 @@
                     <table class="table "><!--listTable-->
                         <thead class="thead-light">
                             <tr> 
-                                <th><?= gettext('Cod') ?></th>                                        
+                                <th><?= gettext('Product') ?></th>                                        
                                 <th class="text-center"><?= gettext('Zip') ?></th>                                            
                             </tr><!--end tr-->
                         </thead>
@@ -132,7 +132,7 @@
                         for (var i in json_obj) {
                             
                          /*    console.log(json_obj[i]["zipcode"]); */
-                            $('#resultZip').append("<tr>"+ "<td>"+ json_obj[i]["id"] +"</td>" + "<td class='text-center'>"+ json_obj[i]["zipcode"] +"</td>" + "</tr>");
+                            $('#resultZip').append("<tr>"+ "<td>"+ json_obj[i]["name"] +"</td>" + "<td class='text-center'>"+ json_obj[i]["zipcode"] +"</td>" + "</tr>");
                         }   
                     }
                 },

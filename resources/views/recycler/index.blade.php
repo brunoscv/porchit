@@ -32,7 +32,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <table class="table align-items-center table-flush" id="datatable-basic">
+                            <table class="table align-items-center table-flush" id="table-clients">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Name</th>
@@ -87,4 +87,10 @@
         </script>
         @include('layouts.footers.auth')
     </div>
+    <script type="text/javascript">
+        $('#table-clients').DataTable( {
+            ordering: false,
+            "pagingType": "simple_numbers"
+        });
+    </script>
 @endsection

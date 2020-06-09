@@ -31,7 +31,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <table class="table align-items-center" id="datatable-basic">
+                            <table class="table align-items-center" id="table-drivers">
                                 <thead class="thead-light">
                                     <tr>
                                         <!-- <th scope="col">#</th> -->
@@ -82,7 +82,7 @@
             
                 <form id="" class="form-horizontal">
                     <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-notification">Confimation</h6>
+                        <h6 class="modal-title" id="modal-title-notification">Confirmation</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -104,7 +104,9 @@
     </div>
 
     <script type="text/javascript">
-  
+        $('#table-drivers').DataTable( {
+            ordering: false
+        } );
 
         $('#driverActive').on('shown.bs.modal', function (e) {
             

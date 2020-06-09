@@ -16,8 +16,8 @@ class PickupsController extends Controller
         ->leftJoin('app_users', 'app_users.id', '=', 'pickups.users_id')
         ->leftJoin('pickups_products', 'pickups.id', '=', 'pickups_products.pickups_id')
         ->leftJoin('pickups_comments', 'pickups.id', '=', 'pickups_comments.pickups_id')
-        ->select(DB::raw('COUNT(pickups_products.pickups_id) AS products'),'pickups.id', 'app_users.firstname', 'app_users.lastname', 'pickups.date_pickup', 'pickups.pickup_at', 'pickups_comments.comments', 'pickups.status', 'pickups.created_at')
-        ->groupBy('pickups.id', 'app_users.firstname', 'app_users.lastname', 'pickups.date_pickup', 'pickups.pickup_at', 'pickups.status', 'pickups_comments.comments', 'pickups.created_at')
+        ->select(DB::raw('COUNT(pickups_products.pickups_id) AS products'),'pickups.id', 'app_users.firstname', 'app_users.lastname', 'pickups.date_pickup', 'pickups.pickup_at', 'pickups_comments.comments', 'pickups.status', 'pickups.pickup_status', 'pickups.created_at')
+        ->groupBy('pickups.id', 'app_users.firstname', 'app_users.lastname', 'pickups.date_pickup', 'pickups.pickup_at', 'pickups.status', 'pickups_comments.comments', 'pickups.pickup_status', 'pickups.created_at')
         ->orderBy('pickups.id', 'DESC')
         ->get();
 

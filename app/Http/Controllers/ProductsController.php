@@ -80,11 +80,20 @@ class ProductsController extends Controller
     }
 
     public function productzipcode(Request $request, $id) {
-        $zipcode = DB::table('products_zipcodes')->select('id', 'zipcode')->where('products_id', $id)->get();
+        //$zipcode = DB::table('products_zipcodes')->select('products_zipcodes.id', 'products_zipcodes.zipcode')->where(['products_zipcodes.products_id' => $id])->get();
+        $products = DB::table('products')
+                        ->leftJoin('states', 'products.state_id', '=', 'states.id')
+                        ->leftJoin('products_zipcodes', 'products.id', '=', 'products_zipcodes.products_id')
+                        ->select('products.id', 'products.description AS name', 'products_zipcodes.zipcode')
+                        ->where('products_zipcodes.products_id', $id)
+                        ->orderBy('products.id', 'DESC')
+                        ->get();
+        // echo "<pre/>";
+        // print_r($products); exit;
         
         $ziparr = [
             'success' => true,
-            'result' => $zipcode
+            'result' => $products
         ];
         
         $result = json_encode($ziparr);

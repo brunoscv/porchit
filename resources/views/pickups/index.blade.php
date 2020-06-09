@@ -31,13 +31,14 @@
                                     </div>
                                 @endif
                             </div>
-                            <table class="table align-items-center" id="datatable-basic">
+                            <table class="table align-items-center" id="table-pickups">
                                 <thead class="thead-light">
                                     <tr>
                                         <!-- <th scope="col">#</th> -->
                                         <th class="text-center" scope="col">Recycler</th>
                                         <th class="text-center" scope="col">Products</th>
                                         <th class="text-center" scope="col">Comments</th>
+                                        <th class="text-center" scope="col">Pickup Done?</th>
                                         <th class="text-center" scope="col">Pickup Date</th>
                                         <th class="text-center" scope="col">Creation Date</th>
                                         <th  class="text-center"scope="col">Status</th>
@@ -52,6 +53,7 @@
                                         <td><?= $pickup->firstname . ' '. $pickup->lastname ?></td>
                                         <td class="text-center"><a class="" href="#" data-toggle="modal" data-target="#productZip" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->products ?></a></td>
                                         <td><?= $pickup->comments ?></td>
+                                        <td><?= $pickup->pickup_status == 1 ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>' ?></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->date_pickup)) ?></td>
                                         <td class="text-center"><?= date('m/d/Y h:i A', strtotime($pickup->created_at)) ?></td>
                                         <td class="text-center"> <a class="" href="#" data-toggle="modal" data-target="#pickupActive" data-pickupid="<?= $pickup->id ?>"> <?= $pickup->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Deactive</span>' ?></a></td>
@@ -115,7 +117,7 @@
             
                 <form id="" class="form-horizontal">
                     <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-notification">Confimation</h6>
+                        <h6 class="modal-title" id="modal-title-notification">Confirmation</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -137,6 +139,10 @@
     </div>
 
     <script type="text/javascript">
+
+        $('#table-pickups').DataTable( {
+            ordering: false
+        } );
   
         $('#productZip').on('shown.bs.modal', function (e) {
             
