@@ -220,9 +220,23 @@ class PickupsController extends BaseController
         $payload = JWTAuth::setToken($this->token)->getPayload();
         $drivers_id = $payload["user"]->id;
 
-        $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "'$now'" . ", pickup_status =" . "'1'" . ", drivers_id =" . "'{$drivers_id}'" . ", updated_at =" . "'$now' WHERE id='$id'");
+        $update_pickup = DB::update("UPDATE pickups SET pickup_status =" . "'1'" . ", drivers_id =" . "'{$drivers_id}'" . ", updated_at =" . "'$now' WHERE id='$id'");
 
         return $this->sendResponse($input, 'Pickup Confirmed succesfully');
+    }
+
+    public function conclusion(Request $request)
+    {
+        $input = $request->all();
+        $id = $input["pickup_id"];
+        //Get the extra information from logged user
+        $now = now();
+        $payload = JWTAuth::setToken($this->token)->getPayload();
+        $drivers_id = $payload["user"]->id;
+
+        $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "'$now'" . ", pickup_status =" . "'2'" . ", drivers_id =" . "'{$drivers_id}'" . ", updated_at =" . "'$now' WHERE id='$id'");
+
+        return $this->sendResponse($input, 'Pickup Concluded succesfully');
     }
 
     public function reset(Request $request)
@@ -233,7 +247,7 @@ class PickupsController extends BaseController
         $now = now();
         $payload = JWTAuth::setToken($this->token)->getPayload();
 
-        $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "'$now'" . ", pickup_at =" . "NULL" . ", pickup_status =" . "'0'" . ", drivers_id =" . "NULL" . ", updated_at =" . "'$now' WHERE id='$id'");
+        $update_pickup = DB::update("UPDATE pickups SET pickup_at =" . "NULL" . ", pickup_status =" . "'0'" . ", drivers_id =" . "NULL" . ", updated_at =" . "'$now' WHERE id='$id'");
 
         return $this->sendResponse($input, 'Pickup Reseted succesfully');
     }
