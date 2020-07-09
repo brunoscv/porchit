@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/user/create', ['as' => 'user.form', 'uses' => 'UserController@create']);
@@ -42,18 +40,14 @@ Route::get('/products/zipcode/{id}', 'ProductsController@zipcode');
 Route::get('/products/productzipcode/{id}', 'ProductsController@productzipcode');
 Route::get('/products/{id}/destroy', 'ProductsController@destroy')->name('product-delete');
 
-
 Route::get('/pickups', 'PickupsController@index')->name('pickups');
 Route::get('/pickups/productzipcode/{id}', 'PickupsController@productzipcode');
 Route::get('/pickups/activepickup/{id}', 'PickupsController@activepickup');
 
-
 Route::get('/drivers', 'DriversController@index')->name('drivers');
 Route::get('/drivers/activedriver/{$id}', 'DriversController@activedriver')->name('active');
 
-
-
-
+Route::get('/privacy-notice', 'PrivacyNoticeController@index')->name('privacy');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
@@ -61,4 +55,3 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
-
