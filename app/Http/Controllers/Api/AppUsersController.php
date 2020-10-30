@@ -25,7 +25,7 @@ class AppUsersController extends BaseController
             'lastname' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'phone' => 'required',
+            'phone' => '',
             'address' => 'required',
             'zipcode' => 'required',   
         ]);
@@ -78,7 +78,7 @@ class AppUsersController extends BaseController
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required',
-            'phone' => 'required',
+            'phone' => '',
             'address' => 'required',
             'zipcode' => 'required',   
         ]);

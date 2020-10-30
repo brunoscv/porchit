@@ -18,7 +18,7 @@ class CreateAppUsersTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('address');
             $table->string('zipcode');
             $table->timestamp('email_verified_at')->nullable();
